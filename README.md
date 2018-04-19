@@ -28,7 +28,7 @@ port.postMessage('ping')
 
 You can reuse low level transform streams to encode/decode messages:
 
-```
+```javascript
 const {NativeEncoder, NativeDecoder} = require('browser.runtime')
 ```
 
