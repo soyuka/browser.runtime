@@ -1,5 +1,6 @@
 browser.runtime
 ===============
+[![Build Status](https://travis-ci.org/soyuka/browser.runtime.svg?branch=master)](https://travis-ci.org/soyuka/browser.runtime)
 
 [`browser.runtime`](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/runtime) implementation in nodejs.
 
