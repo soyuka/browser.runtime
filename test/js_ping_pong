@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+const {PassThrough} = require('stream')
+const pump = require('pump')
+const onmessage = new PassThrough()
+const postMessage = new PassThrough()
+const decode = require('../decoder')()
+const encode = require('../encoder')()
+
+pump(process.stdin, decode, onmessage, function (err) {})
+pump(postMessage, encode, process.stdout, function (err) {})
+
+onmessage.on('data', function (d) {
+  d = JSON.parse(d.toString())
+
+  if (d === 'ping') {
+    postMessage.write(JSON.stringify('pong'))
+  }
+})
