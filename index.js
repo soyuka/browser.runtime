@@ -11,9 +11,7 @@ function createListenerMethods (arr) {
     },
     removeListener: (l) => {
       const index = arr.findIndex((i) => i === l)
-      if (~index) {
-        arr.splice(index, 1)
-      }
+      if (~index) arr.splice(index, 1)
     }
   }
 }
