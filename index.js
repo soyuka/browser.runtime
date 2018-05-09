@@ -80,6 +80,16 @@ function connectNative (script) {
   return new Port(script)
 }
 
-module.exports.connectNative = connectNative
-module.exports.NativeEncoder = encoder
-module.exports.NativeDecoder = decoder
+var runtime = {
+  connectNative: connectNative,
+  NativeEncoder: encoder,
+  NativeDecoder: decoder
+}
+
+if (typeof window !== 'undefined' && window.runtime) {
+  window.runtime.NativeEncoder = encoder
+  window.runtime.NativeDecoder = decoder
+  runtime = window.runtime
+}
+
+module.exports = runtime
