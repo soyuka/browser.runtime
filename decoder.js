@@ -12,8 +12,8 @@ class Decoder extends Transform {
     let buffer = Buffer.concat([ this._buffer, chunk ])
 
     if (this._currentLength === 0) {
-      this._currentLength = chunk.readInt32LE(0)
-      buffer = chunk.slice(4)
+      this._currentLength = buffer.readInt32LE(0)
+      buffer = buffer.slice(4)
     }
 
     // we didn't get all of the message yet
@@ -26,11 +26,16 @@ class Decoder extends Transform {
     this.push(buffer.toString('utf8', 0, this._currentLength))
 
     // read everything?
-    if (buffer.length === this._currentLength) this._buffer = EMPTY
-    else this._buffer = Buffer.from(buffer.slice(this._currentLength))
+    if (buffer.length === this._currentLength) {
+      this._buffer = EMPTY
+      this._currentLength = 0
+      cb()
+      return
+    }
 
+    this._buffer = Buffer.from(buffer.slice(this._currentLength))
     this._currentLength = 0
-    cb()
+    this._transform(EMPTY, enc, cb)
   }
 }
 
